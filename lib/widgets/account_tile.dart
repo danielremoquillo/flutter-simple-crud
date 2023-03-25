@@ -43,14 +43,15 @@ class AccountTile extends StatelessWidget {
                   Text(
                     account.name,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w400,
                         fontSize: FontSizeSetting.h4),
                   ),
                   const SizedBox(height: 4.0),
                   Text(
                     account.email,
-                    style: TextStyle(
-                        color: Colors.grey[500], fontSize: FontSizeSetting.h5),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w100,
+                        fontSize: FontSizeSetting.h5),
                   ),
                 ],
               ),

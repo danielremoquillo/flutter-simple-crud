@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_crud_ncf_app/classes/account.dart';
 import 'package:flutter_crud_ncf_app/components/accounts.dart';
 import 'package:flutter_crud_ncf_app/components/products.dart';
+import 'package:flutter_crud_ncf_app/screens/profile.dart';
 import 'package:flutter_crud_ncf_app/settings/fontsize.dart';
 import 'package:flutter_crud_ncf_app/widgets/design_line.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -43,7 +44,14 @@ class Home extends StatelessWidget {
                           ),
                           InkWell(
                             borderRadius: BorderRadius.circular(20.0),
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return ProfilePage(
+                                  currentUser: snapshot.data!,
+                                );
+                              }));
+                            },
                             child: Container(
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
@@ -92,7 +100,7 @@ class Home extends StatelessWidget {
                             'Products',
                             style: TextStyle(
                                 fontSize: FontSizeSetting.h2,
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.w500),
                           ),
                           RichText(
                             text: TextSpan(
@@ -126,7 +134,7 @@ class Home extends StatelessWidget {
                             'Users',
                             style: TextStyle(
                                 fontSize: FontSizeSetting.h2,
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.w500),
                           ),
                           RichText(
                             text: TextSpan(

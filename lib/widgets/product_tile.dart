@@ -43,14 +43,15 @@ class ProductTile extends StatelessWidget {
                   Text(
                     product.title,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w400,
                         fontSize: FontSizeSetting.h4),
                   ),
                   const SizedBox(height: 4.0),
                   Text(
                     product.description,
                     style: TextStyle(
-                        color: Colors.grey[500], fontSize: FontSizeSetting.h5),
+                        fontWeight: FontWeight.w100,
+                        fontSize: FontSizeSetting.h5),
                   ),
                 ],
               ),
