@@ -24,7 +24,26 @@ class Home extends StatelessWidget {
               future: loginUser,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 2.8,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Logging in.',
+                            style: TextStyle(fontSize: FontSizeSetting.h3),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Center(child: CircularProgressIndicator()),
+                        ],
+                      ),
+                    ],
+                  );
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else if (snapshot.hasData && snapshot.data == null) {

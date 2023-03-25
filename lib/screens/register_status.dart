@@ -66,7 +66,7 @@ class RegisterStatus extends StatelessWidget {
                             (route) => false,
                           );
 
-                          throw ('Tite');
+                          throw ('Error');
                         },
                       ),
                       builder: (context, snapshot) {

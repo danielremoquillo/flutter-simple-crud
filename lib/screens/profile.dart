@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_ncf_app/classes/account.dart';
+import 'package:flutter_crud_ncf_app/screens/edit_account.dart';
 import 'package:flutter_crud_ncf_app/settings/fontsize.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -69,7 +70,11 @@ class ProfilePage extends StatelessWidget {
               height: 40,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return EditAccountPage(currentUser: currentUser);
+                }));
+              },
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
