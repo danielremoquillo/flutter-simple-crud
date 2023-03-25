@@ -26,7 +26,7 @@ class _LoginFormState extends State<LoginForm> {
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
         return Home(
-          loginUser: loginUser('t', '1'),
+          loginUser: loginUser('ash1@nm.com', '1'),
         );
       }), (route) => false);
     }

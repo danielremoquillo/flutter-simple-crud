@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_ncf_app/screens/login.dart';
 
-import 'package:flutter_crud_ncf_app/screens/register.dart';
-
 void main() {
   runApp(const App());
 }

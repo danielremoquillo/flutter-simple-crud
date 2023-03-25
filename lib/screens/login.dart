@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_crud_ncf_app/components/login_form.dart';
 import 'package:flutter_crud_ncf_app/screens/register.dart';
 import 'package:flutter_crud_ncf_app/settings/fontsize.dart';
+import 'package:flutter_crud_ncf_app/widgets/design_line.dart';
 import 'package:flutter_crud_ncf_app/widgets/line.dart';
 
 class LoginPage extends StatelessWidget {
@@ -20,35 +21,28 @@ class LoginPage extends StatelessWidget {
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
+                  children: const [
+                    SizedBox(
                       height: 15,
                     ),
-                    const Text(
+                    Text(
                       'Login to your',
                       style: TextStyle(
                           fontSize: FontSizeSetting.h1,
                           fontWeight: FontWeight.bold),
                     ),
-                    const Text(
+                    Text(
                       'account',
                       style: TextStyle(
                           fontSize: FontSizeSetting.h1,
                           fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 15,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
-                        Line(
-                          length: 90,
-                        ),
-                        Line(
-                          length: 15,
-                        ),
-                      ],
+                    DesignLine(
+                      line1Length: 90,
+                      line2Length: 15,
                     ),
                   ],
                 ),
