@@ -20,13 +20,13 @@ class _LoginFormState extends State<LoginForm> {
   bool _showPassword = false;
 
   void _submitForm() {
-    if (!_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       // Do something with the form data, such as submitting it to a server
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
         return LoginStatus(
-          loginUser: loginUser('f@gmail.com', 'f'),
+          loginUser: loginUser(_email, _password),
         );
       }), (route) => false);
     }
