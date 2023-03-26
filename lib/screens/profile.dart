@@ -1,11 +1,39 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_ncf_app/classes/account.dart';
+import 'package:flutter_crud_ncf_app/screens/delete_status.dart';
 import 'package:flutter_crud_ncf_app/screens/edit_account.dart';
+import 'package:flutter_crud_ncf_app/screens/logout_status.dart';
 import 'package:flutter_crud_ncf_app/settings/fontsize.dart';
+import 'package:http/http.dart' as http;
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key, required this.currentUser});
   final Account currentUser;
+
+  Future<bool> deleteCurrentUser() async {
+    final response = await http.delete(
+      Uri.parse('http://zz.ncf.edu.ph/public/api/delete'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'id': currentUser.id.toString(),
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      return true;
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +56,40 @@ class ProfilePage extends StatelessWidget {
                       fontSize: FontSizeSetting.h2),
                 ),
                 IconButton(
-                  onPressed: () => {},
+                  onPressed: () => {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Logout'),
+                          content:
+                              Text('Are you sure you want to logout this?'),
+                          actions: [
+                            TextButton(
+                              child: Text('CANCEL'),
+                              onPressed: () {
+                                Navigator.of(context).pop(false);
+                              },
+                            ),
+                            TextButton(
+                              child: Text('CONFIRM'),
+                              onPressed: () {
+                                Navigator.of(context).pop(true);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ).then((value) {
+                      if (value == true) {
+                        // Delete the item
+                        Navigator.pushAndRemoveUntil(context,
+                            MaterialPageRoute(builder: (context) {
+                          return LogoutStatus();
+                        }), (route) => false);
+                      }
+                    })
+                  },
                   icon: const Icon(
                     Icons.power_settings_new_rounded,
                     color: Colors.red,
@@ -93,7 +154,39 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Delete'),
+                      content: Text('Are you sure you want to delete this?'),
+                      actions: [
+                        TextButton(
+                          child: Text('CANCEL'),
+                          onPressed: () {
+                            Navigator.of(context).pop(false);
+                          },
+                        ),
+                        TextButton(
+                          child: Text('DELETE'),
+                          onPressed: () {
+                            Navigator.of(context).pop(true);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                ).then((value) {
+                  if (value == true) {
+                    // Delete the item
+                    Navigator.pushAndRemoveUntil(context,
+                        MaterialPageRoute(builder: (context) {
+                      return DeleteStatus(deleteStatus: deleteCurrentUser());
+                    }), (route) => false);
+                  }
+                });
+              },
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),

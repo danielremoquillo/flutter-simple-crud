@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_ncf_app/screens/login.dart';
-import 'package:flutter_crud_ncf_app/screens/register.dart';
 import 'package:flutter_crud_ncf_app/settings/fontsize.dart';
 
-class RegisterStatus extends StatelessWidget {
-  const RegisterStatus({super.key, required this.registerStatus});
-  final Future<bool> registerStatus;
+class DeleteStatus extends StatelessWidget {
+  const DeleteStatus({super.key, required this.deleteStatus});
+  final Future<bool> deleteStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +13,7 @@ class RegisterStatus extends StatelessWidget {
           child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: FutureBuilder<bool>(
-          future: registerStatus,
+          future: deleteStatus,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Center(
@@ -33,8 +32,8 @@ class RegisterStatus extends StatelessWidget {
                     ),
                     Text(
                       snapshot.data!
-                          ? 'Registered Successfully'
-                          : 'Registration Unsuccessful',
+                          ? 'Delete Successfully'
+                          : 'Delete Unsuccessful',
                       style: const TextStyle(fontSize: FontSizeSetting.h2),
                     ),
                     const SizedBox(
@@ -45,9 +44,7 @@ class RegisterStatus extends StatelessWidget {
                       height: 40,
                     ),
                     Text(
-                      snapshot.data!
-                          ? 'Redirecting to login page.'
-                          : 'Redirection to registration page.',
+                      'Redirecting to Login page.',
                       style: const TextStyle(fontSize: FontSizeSetting.h3),
                     ),
                     FutureBuilder<bool>(
@@ -58,9 +55,7 @@ class RegisterStatus extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return snapshot.data!
-                                    ? const LoginPage()
-                                    : const RegisterPage();
+                                return const LoginPage();
                               },
                             ),
                             (route) => false,
@@ -77,30 +72,7 @@ class RegisterStatus extends StatelessWidget {
                 ),
               );
             } else if (snapshot.hasError) {
-              return FutureBuilder(
-                future: Future.delayed(
-                  const Duration(seconds: 0),
-                  () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return const RegisterPage(
-                            status:
-                                'Connection Error: Check Internet connection',
-                          );
-                        },
-                      ),
-                      (route) => false,
-                    );
-
-                    throw ('Error');
-                  },
-                ),
-                builder: (context, snapshot) {
-                  return const SizedBox();
-                },
-              );
+              return Center(child: Text('${snapshot.error}'));
             }
 
             // By default, show a loading spinner.

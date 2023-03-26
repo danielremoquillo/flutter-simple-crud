@@ -2,56 +2,62 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_ncf_app/classes/account.dart';
-import 'package:flutter_crud_ncf_app/screens/login_status.dart';
+import 'package:flutter_crud_ncf_app/screens/login.dart';
+import 'package:flutter_crud_ncf_app/screens/register_status.dart';
+import 'package:flutter_crud_ncf_app/screens/update_status.dart';
 import 'package:flutter_crud_ncf_app/settings/fontsize.dart';
 import 'package:http/http.dart' as http;
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+class UpdateForm extends StatefulWidget {
+  const UpdateForm({super.key, required this.currentUser});
+  final Account currentUser;
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  _UpdateFormState createState() => _UpdateFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _UpdateFormState extends State<UpdateForm> {
   final _formKey = GlobalKey<FormState>();
+  late String _name;
   late String _email;
   late String _password;
   bool _showPassword = false;
 
   void _submitForm() {
-    if (!_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       // Do something with the form data, such as submitting it to a server
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
-        return LoginStatus(
-          loginUser: loginUser('f@gmail.com', 'f'),
+        return UpdateStatus(
+          updateStatus: updateUser(_email, _name, _password),
         );
       }), (route) => false);
     }
   }
 
-  Future<Account> loginUser(String email, String password) async {
-    final response = await http.post(
-      Uri.parse('http://zz.ncf.edu.ph/public/api/login'),
+  Future<bool> updateUser(String email, String name, String password) async {
+    final response = await http.put(
+      Uri.parse('http://zz.ncf.edu.ph/public/api/update'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
         'email': email,
+        'name': name,
         'password': password,
+        'id': widget.currentUser.id.toString(),
       }),
     );
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return Account.fromJson(jsonDecode(response.body));
+      return true;
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to login');
+      return false;
     }
   }
 
@@ -67,6 +73,54 @@ class _LoginFormState extends State<LoginForm> {
               canvasColor: Colors.grey[300],
             ),
             child: TextFormField(
+              initialValue: widget.currentUser.name,
+              decoration: InputDecoration(
+                labelText: 'Name',
+                contentPadding: const EdgeInsets.only(left: 20, right: 20),
+                labelStyle:
+                    const TextStyle(fontSize: FontSizeSetting.placeholder),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.blue),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                filled: true,
+              ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter your name';
+                }
+                final RegExp nameExp = RegExp(r'^[a-zA-Z\s]+$');
+                if (!nameExp.hasMatch(value)) {
+                  return 'Please enter only alphabetical characters';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _name = value!;
+              },
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Theme(
+            data: Theme.of(context).copyWith(
+              canvasColor: Colors.grey[300],
+            ),
+            child: TextFormField(
+              initialValue: widget.currentUser.email,
               decoration: InputDecoration(
                 labelText: 'Email',
                 contentPadding: const EdgeInsets.only(left: 20, right: 20),
@@ -101,7 +155,7 @@ class _LoginFormState extends State<LoginForm> {
                 return null;
               },
               onSaved: (value) {
-                _email = value!;
+                _email = value!.toLowerCase();
               },
             ),
           ),
@@ -138,7 +192,9 @@ class _LoginFormState extends State<LoginForm> {
                 filled: true,
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _showPassword ? Icons.visibility : Icons.visibility_off,
+                    _showPassword
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
                     color: Colors.grey,
                   ),
                   onPressed: () {
@@ -152,8 +208,10 @@ class _LoginFormState extends State<LoginForm> {
                 if (value!.isEmpty) {
                   return 'Please enter your password';
                 }
-
                 return null;
+              },
+              onChanged: (value) {
+                _password = value;
               },
               onSaved: (value) {
                 _password = value!;
@@ -161,10 +219,10 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           const SizedBox(
-            height: 30,
+            height: 20,
           ),
           ElevatedButton(
-            onPressed: _submitForm,
+            onPressed: () {},
             style: ElevatedButton.styleFrom(
                 elevation: 0,
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -173,7 +231,7 @@ class _LoginFormState extends State<LoginForm> {
             child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: const Text(
-                  'Login',
+                  'Update',
                   style: TextStyle(fontSize: 15),
                   textAlign: TextAlign.center,
                 )),

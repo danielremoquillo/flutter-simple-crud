@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_crud_ncf_app/classes/account.dart';
 import 'package:flutter_crud_ncf_app/components/accounts.dart';
 import 'package:flutter_crud_ncf_app/components/products.dart';
+import 'package:flutter_crud_ncf_app/screens/login.dart';
 import 'package:flutter_crud_ncf_app/screens/profile.dart';
 import 'package:flutter_crud_ncf_app/settings/fontsize.dart';
 import 'package:flutter_crud_ncf_app/widgets/design_line.dart';
@@ -31,7 +32,7 @@ class Home extends StatelessWidget {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: const [
                           Text(
                             'Logging in.',
                             style: TextStyle(fontSize: FontSizeSetting.h3),
@@ -45,7 +46,30 @@ class Home extends StatelessWidget {
                     ],
                   );
                 } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
+                  return FutureBuilder(
+                    future: Future.delayed(
+                      const Duration(seconds: 0),
+                      () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const LoginPage(
+                                status:
+                                    'Connection Error: Check Internet connection',
+                              );
+                            },
+                          ),
+                          (route) => false,
+                        );
+
+                        throw ('Error');
+                      },
+                    ),
+                    builder: (context, snapshot) {
+                      return const SizedBox();
+                    },
+                  );
                 } else if (snapshot.hasData && snapshot.data == null) {
                   return const Text('No data available');
                 } else {

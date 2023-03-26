@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_ncf_app/classes/account.dart';
 import 'package:flutter_crud_ncf_app/classes/user.dart';
+import 'package:flutter_crud_ncf_app/components/update_from.dart';
 import 'package:flutter_crud_ncf_app/settings/fontsize.dart';
 
 class EditAccountPage extends StatelessWidget {
@@ -42,6 +43,9 @@ class EditAccountPage extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 30,
+                ),
+                UpdateForm(
+                  currentUser: currentUser,
                 ),
               ],
             ),

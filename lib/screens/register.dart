@@ -7,8 +7,8 @@ import 'package:flutter_crud_ncf_app/settings/fontsize.dart';
 import 'package:flutter_crud_ncf_app/widgets/line.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
-
+  const RegisterPage({super.key, this.status});
+  final String? status;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +76,11 @@ class RegisterPage extends StatelessWidget {
                             },
                         ),
                       ]),
-                )
+                ),
+                Text(
+                  '${status ?? ''}.',
+                  style: TextStyle(color: Colors.red),
+                ),
               ],
             ),
           ),

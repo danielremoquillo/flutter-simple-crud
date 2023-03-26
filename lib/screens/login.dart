@@ -8,7 +8,8 @@ import 'package:flutter_crud_ncf_app/widgets/design_line.dart';
 import 'package:flutter_crud_ncf_app/widgets/line.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  const LoginPage({super.key, this.status});
+  final String? status;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +72,14 @@ class LoginPage extends StatelessWidget {
                                 }), (route) => false);
                               }),
                       ]),
-                )
+                ),
+                const SizedBox(
+                  height: 60,
+                ),
+                Text(
+                  '${status ?? ''}.',
+                  style: TextStyle(color: Colors.red),
+                ),
               ],
             ),
           ),
