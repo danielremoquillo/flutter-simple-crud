@@ -18,14 +18,14 @@ class LogoutStatus extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
-                  Text(
-                    'Logging out.',
-                    style: TextStyle(fontSize: FontSizeSetting.h3),
-                  ),
+                  Center(child: CircularProgressIndicator()),
                   SizedBox(
                     width: 10,
                   ),
-                  Center(child: CircularProgressIndicator()),
+                  Text(
+                    'Logging out',
+                    style: TextStyle(fontSize: FontSizeSetting.h3),
+                  ),
                 ],
               ),
               FutureBuilder<bool>(

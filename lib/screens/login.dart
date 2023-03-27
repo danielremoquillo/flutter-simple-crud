@@ -77,7 +77,7 @@ class LoginPage extends StatelessWidget {
                   height: 60,
                 ),
                 Text(
-                  '${status ?? ''}.',
+                  '${status ?? ''}',
                   style: TextStyle(color: Colors.red),
                 ),
               ],

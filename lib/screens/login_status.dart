@@ -24,14 +24,14 @@ class LoginStatus extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
-                      Text(
-                        'Processing',
-                        style: TextStyle(fontSize: FontSizeSetting.h3),
-                      ),
+                      Center(child: CircularProgressIndicator()),
                       SizedBox(
                         width: 10,
                       ),
-                      Center(child: CircularProgressIndicator()),
+                      Text(
+                        'Logging In',
+                        style: TextStyle(fontSize: FontSizeSetting.h3),
+                      ),
                     ],
                   ),
                   FutureBuilder<bool>(
@@ -59,7 +59,7 @@ class LoginStatus extends StatelessWidget {
                                     )
                                   : const LoginPage(
                                       status:
-                                          'Login Error: Account is not available.',
+                                          'Login Error: Account is not available',
                                     );
                             },
                           ),
