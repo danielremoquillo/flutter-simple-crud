@@ -28,6 +28,7 @@ If you have connected android device, run
 
 
 ## Screenshots
+<p float="left">
 
 <img src="https://github.com/danielremoquillo/screenshots/blob/main/flutter-simple-crud/login.png" width=25% height=25% />
 <img src="https://github.com/danielremoquillo/screenshots/blob/main/flutter-simple-crud/register.png" width=25% height=25% />
@@ -35,6 +36,7 @@ If you have connected android device, run
 <img src="https://github.com/danielremoquillo/screenshots/blob/main/flutter-simple-crud/update.png"  width=25% height=25%/>
 <img src="https://github.com/danielremoquillo/screenshots/blob/main/flutter-simple-crud/delete.png" width=25% height=25% />
 <img src="https://github.com/danielremoquillo/screenshots/blob/main/flutter-simple-crud/logout.png"  width=25% height=25%/>
+</p>
 
 ## Plugins
 
